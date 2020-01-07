@@ -7,20 +7,19 @@
 defmodule MyList do
   def max([]), do: nil
   def max([n]), do: n
-  def max([head | tail]) do
-    if head >= max(tail) do
-      head
-    else
-      max(tail)
-    end
-  end
+  def max([a, b | tail]) when a >= b, do: find_max(tail, a)
+  def max([a, b | tail]) when a < b, do: find_max(tail, b)
 
+  defp find_max([], max), do: max
+  defp find_max([head | tail], max) when head >= max, do: find_max(tail, head)
+  defp find_max([head | tail], max) when head < max, do: find_max(tail, max)
+
+  def min([]), do: nil
   def min([n]), do: n
-  def min([head | tail]) do
-    if head <= min(tail) do
-      head
-    else
-      min(tail)
-    end
-  end
+  def min([a, b | tail]) when a <= b, do: find_min(tail, a)
+  def min([a, b | tail]) when a > b, do: find_min(tail, b)
+
+  defp find_min([], min), do: min
+  defp find_min([head | tail], min) when head <= min, do: find_min(tail, head)
+  defp find_min([head | tail], min) when head > min, do: find_min(tail, min)
 end
