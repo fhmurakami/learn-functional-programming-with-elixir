@@ -9,6 +9,11 @@ defmodule MyList do
   def map([head | tail], function) do
     [function.(head) | map(tail, function)]
   end
+
+  def reduce([], acc, _function), do: acc
+  def reduce([head | tail], acc, function) do
+    reduce(tail, function.(head, acc), function)
+  end
 end
 
 # IEx:
@@ -31,3 +36,9 @@ end
 #    %{price: 33.0, title: "Edwin's Rope"},
 #    %{price: 110.00000000000001, title: "Dragon's Spear"}
 # ]
+#
+# sum_price = fn item, sum -> item.price + sum end
+# MyList.reduce(enchanted_items, 0, sum_price)
+#
+# Output:
+# 340
