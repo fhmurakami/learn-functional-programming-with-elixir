@@ -14,6 +14,15 @@ defmodule MyList do
   def reduce([head | tail], acc, function) do
     reduce(tail, function.(head, acc), function)
   end
+
+  def filter([], _function), do: []
+  def filter([head | tail], function) do
+    if function.(head) do
+      [head | filter(tail, function)]
+    else
+      filter(tail, function)
+    end
+  end
 end
 
 # IEx:
@@ -42,3 +51,8 @@ end
 #
 # Output:
 # 340
+#
+# MyList.filter(enchanted_items, fn item -> item.price < 70 end)
+#
+# Output:
+# [%{price: 60, title: "Healing Potion"}, %{price: 30, title: "Edwin's Rope"}]
